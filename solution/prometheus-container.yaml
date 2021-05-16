@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: assignment
+  labels:
+    run: prometheus-container
+  name: prometheus-container
+spec:
+  volumes:
+  - name: prometheus-vol
+    hostPath:
+      path: /tmp/assignment_files/prometheus.yml
+      type: File
+  containers:
+  # CSV Server Container
+  - name: prometheus-container
+    image: prom/prometheus:v2.22.0
+    ports:
+    - containerPort: 9090
+    volumeMounts:
+    - mountPath: /etc/prometheus.yml
+      name: prometheus-vol

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: assignment
+  labels:
+    run: csvserver-container
+  name: csvserver-container
+spec:
+  volumes:
+  - name: csvserver-vol
+    hostPath:
+      path: /tmp/assignment_files/inputFile
+      type: File
+  containers:
+  # CSV Server Container
+  - name: csvserver-container
+    image: infracloudio/csvserver:latest
+    ports:
+    - containerPort: 9300
+    volumeMounts:
+    - mountPath: /csvserver/inputdata
+      name: csvserver-vol
